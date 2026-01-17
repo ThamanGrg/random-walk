@@ -9,7 +9,6 @@ The goal of this project is to practice Python basics, lists, and data visualiza
 - Generates random walk data
 - Visualizes the path using a scatter plot
 - Hides axes for a clean visualization
-- Highlights the starting and ending points
 
 ## How to run program
 1. Install the Matplotlib module if not installed.
