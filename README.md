@@ -10,6 +10,11 @@ The goal of this project is to practice Python basics, lists, and data visualiza
 - Visualizes the path using a scatter plot
 - Hides axes for a clean visualization
 
+## Technologies Used
+- Python
+- Matplotlib
+- Random module
+
 ## How to run program
 1. Install the Matplotlib module if not installed.
 - pip install matplotlib
@@ -19,11 +24,6 @@ The goal of this project is to practice Python basics, lists, and data visualiza
 The program displays a plot showing a random path created by step-by-step movement in random directions.
 
 ![Random Walk Visualization](randomwalk.png)
-
-## Technologies Used
-- Python
-- Matplotlib
-- Random module
 
 ## Learning Outcome
 - Understand how random walks work
