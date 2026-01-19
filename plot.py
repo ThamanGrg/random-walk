@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-from randomwalks import RandomWalk
+from randomwalk import RandomWalk
 
 
 rw = RandomWalk(50000)
