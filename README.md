@@ -25,7 +25,7 @@ The goal of this project is to practice Python basics, lists, and data visualiza
 
 ## Web
 
-To run the project on web run "web.py" file
+To run the project on web run "web.py" file.
     ```bash
     python web.py
 
