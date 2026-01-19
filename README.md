@@ -23,6 +23,13 @@ The goal of this project is to practice Python basics, lists, and data visualiza
     ```bash
     python plot.py
 
+## Web
+
+To run the project on web run "web.py" file
+
+```bash
+python web.py
+
 ## Output
 The program displays a plot showing a random path created by step-by-step movement in random directions.
 
