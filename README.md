@@ -17,8 +17,11 @@ The goal of this project is to practice Python basics, lists, and data visualiza
 
 ## How to run program
 1. Install the Matplotlib module if not installed.
-- pip install matplotlib
-2. Run the "plot.py" file.
+   ```bash
+   pip install matplotlib
+3. Run the file.
+   ```bash
+   python plot.py
 
 ## Output
 The program displays a plot showing a random path created by step-by-step movement in random directions.
