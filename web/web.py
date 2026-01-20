@@ -1,23 +1,30 @@
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import plotly.graph_objects as go
 from randomwalk import RandomWalk
 
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def index():
+    return render_template("index.html")
+
+@app.route("/generate", methods=["GET", "POST"])
+def generate():
     graph = None
     size=2 
-    
+    dataP = 5000
     if request.method == "POST":
-        data = 5000
-        size = int(request.form.get("size"))
+        data = request.get_json()
 
-        rw = RandomWalk(data)
+        dataP = int(data["points"])
+        size = int(data["size"])
+        print(dataP)
+
+        rw = RandomWalk(dataP)
         rw.fill_walk()
 
         fig = go.Figure(data=go.Scatter(
@@ -27,8 +34,8 @@ def index():
             marker=dict(
                 size=size,
                 color = rw.x_values,
-                colorscale='Blues',
-                showscale=True
+                colorscale='ice',
+                showscale = False
             )
         ))
 
@@ -45,13 +52,11 @@ def index():
             )
         )
 
-        graph = fig.to_html(
-            full_html=False,
-            config={"responsive": True}
-
-        )
+        graph = fig.to_json()
         
-    return render_template("index.html", graph=graph, size = size)
+        return jsonify({
+            "graph": graph
+        }) 
 
 if __name__ == "__main__":
     app.run(debug=True)

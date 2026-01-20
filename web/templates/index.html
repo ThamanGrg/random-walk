@@ -12,25 +12,78 @@
 <body>
     <header>
         <h1>Random Walk</h1>
-
     </header>
-    
     <div class="main">
-        <div class="graph">
-            {% if graph %}
-            {{ graph | safe }}
-            {% endif %}
+        <div class="graph" id="graph">
         </div>
-        <div class="form">
-            <form method="POST">
-                <input type="range" name="size" max="5" min="1" value="{{ size }}">
-                <button type="submit" name="generate" value="input">
-                    Generate
-                </button>
+
+        <div class="side-bar">
+            <form method="POST" id="form">
+                <div class="inputs">
+                    <label for="points">No of points: </label>
+                    <input type="number" name="points" id="points" value="5000">
+                    <label for="size">Size: <span id="sizeValue"></span></label>
+                    <input type="range" name="size" id="size" max="20" min="1" value="2">
+                    <label>Color: </label>
+                    <select id="colorInp">
+                        <option value="Blues">Blues</option>
+                        <option value="Greens">Greens</option>
+                        <option value="Ice">Ice</option>
+                        <option value="Algae">Algae</option>
+                        <option value="Mint">Mint</option>
+                        <option value="Sunset">Sunset</option>
+                        <option value="gray">gray</option>
+                    </select>
+                    <button type="submit" name="generate" value="input">
+                        Generate
+                    </button>
+                </div>
+
             </form>
         </div>
 
     </div>
 </body>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+<script>
+    const sizeValue = document.getElementById("sizeValue");
+    const form = document.getElementById("form");
+    const graphId = document.getElementById("graph");
+    const slider = document.getElementById("size");
+
+    sizeValue.textContent = slider.value;
+
+    slider.addEventListener("input", () => {
+        sizeValue.textContent = slider.value;
+    });
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault()
+        let noOfPoint = form.points.value;
+        let size = form.size.value;
+
+        fetch("/generate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ points: noOfPoint, size: size })
+        })
+            .then(res => res.json())
+            .then(data => {
+                const graph = JSON.parse(data.graph)
+
+                graph.layout.xaxis = {
+                    visible: false
+                };
+
+                graph.layout.yaxis = {
+                    visible: false
+                };
+
+                Plotly.newPlot("graph", graph.data, graph.layout)
+            });
+    });
+
+</script>
 
 </html>
