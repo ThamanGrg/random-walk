@@ -23,9 +23,9 @@
                     <label for="points">No of points: </label>
                     <input type="number" name="points" id="points" value="5000">
                     <label for="size">Size: <span id="sizeValue"></span></label>
-                    <input type="range" name="size" id="size" max="20" min="1" value="2">
+                    <input type="range" name="size" id="size" max="100" min="1" value="2">
                     <label>Color: </label>
-                    <select id="colorInp">
+                    <select id="colorInp" name="color">
                         <option value="Blues">Blues</option>
                         <option value="Greens">Greens</option>
                         <option value="Ice">Ice</option>
@@ -51,22 +51,22 @@
     const form = document.getElementById("form");
     const graphId = document.getElementById("graph");
     const slider = document.getElementById("size");
-
-    sizeValue.textContent = slider.value;
+    const colorInp = document.getElementById("colorInp");
 
     slider.addEventListener("input", () => {
         sizeValue.textContent = slider.value;
     });
 
-    form.addEventListener("submit", function (e) {
+    form.addEventListener("submit", function generate(e) {
         e.preventDefault()
         let noOfPoint = form.points.value;
         let size = form.size.value;
+        let colorValue = form.color.value;
 
         fetch("/generate", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ points: noOfPoint, size: size })
+            body: JSON.stringify({ points: noOfPoint, size: size, color: colorValue })
         })
             .then(res => res.json())
             .then(data => {

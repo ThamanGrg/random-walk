@@ -5,24 +5,26 @@ from flask import Flask, render_template, request, jsonify
 import plotly.graph_objects as go
 from randomwalk import RandomWalk
 
-
 app = Flask(__name__)
 
 @app.route("/")
 def index():
+    generate()
     return render_template("index.html")
+    
 
 @app.route("/generate", methods=["GET", "POST"])
 def generate():
     graph = None
     size=2 
     dataP = 5000
+
     if request.method == "POST":
         data = request.get_json()
 
         dataP = int(data["points"])
         size = int(data["size"])
-        print(dataP)
+        color = data["color"]
 
         rw = RandomWalk(dataP)
         rw.fill_walk()
@@ -34,7 +36,7 @@ def generate():
             marker=dict(
                 size=size,
                 color = rw.x_values,
-                colorscale='ice',
+                colorscale=color,
                 showscale = False
             )
         ))
@@ -56,7 +58,6 @@ def generate():
         
         return jsonify({
             "graph": graph
-        }) 
-
+        })     
 if __name__ == "__main__":
     app.run(debug=True)
